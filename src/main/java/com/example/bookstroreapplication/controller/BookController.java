@@ -2,6 +2,7 @@ package com.example.bookstroreapplication.controller;
 
 import com.example.bookstroreapplication.dto.BookDTO;
 import com.example.bookstroreapplication.dto.ResponseDTO;
+import com.example.bookstroreapplication.model.Book;
 import com.example.bookstroreapplication.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,14 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.awt.print.Book;
+
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/book")
 public class BookController {
-
 
     @Autowired
     IBookService bookService;

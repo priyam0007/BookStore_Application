@@ -1,8 +1,9 @@
 package com.example.bookstroreapplication.service;
 
 import com.example.bookstroreapplication.dto.BookDTO;
+import com.example.bookstroreapplication.model.Book;
 
-import java.awt.print.Book;
+
 import java.util.List;
 
 public interface IBookService {
@@ -10,17 +11,16 @@ public interface IBookService {
 
     List<Book> getAllBookData();
 
-    Book getBookDataById(Integer bookId);
+    Book getBookDataById(int bookId);
+    String deleteRecordById(int BookId);
 
-    List<Book> getBookByAuthorName(String authorName);
+    List<com.example.bookstroreapplication.model.Book> getBookByAuthorName(String authorName);
 
-    List<Book> getBookByName(String name);
+    List<com.example.bookstroreapplication.model.Book> getBookByName(String name);
 
-    List<Book> sortedListOfBooksInAscendingOrder();
+    List<com.example.bookstroreapplication.model.Book> sortedListOfBooksInAscendingOrder();
 
-    List<Book> sortedListOfBooksInDescendingOrder();
-
-    Object deleteRecordById(Integer bookId);
+    List<com.example.bookstroreapplication.model.Book> sortedListOfBooksInDescendingOrder();
 
     Book updateRecordById(Integer bookId, BookDTO bookDTO);
 }
