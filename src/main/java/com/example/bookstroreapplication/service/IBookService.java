@@ -12,6 +12,7 @@ public interface IBookService {
     List<Book> getAllBookData();
 
     Book getBookDataById(int bookId);
+
     String deleteRecordById(int BookId);
 
     List<com.example.bookstroreapplication.model.Book> getBookByAuthorName(String authorName);

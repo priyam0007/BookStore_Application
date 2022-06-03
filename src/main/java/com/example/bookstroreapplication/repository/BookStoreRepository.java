@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BookStoreRepository extends JpaRepository<Book,Integer> {
+public interface BookStoreRepository extends JpaRepository<Book, Integer> {
     @Query(value = "select * from book_registration where book_name like :bookName%", nativeQuery = true)
     List<com.example.bookstroreapplication.model.Book> findByBookName(String bookName);
 

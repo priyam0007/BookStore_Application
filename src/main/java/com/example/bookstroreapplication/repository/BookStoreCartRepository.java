@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface BookStoreCartRepository extends JpaRepository<Cart,Integer> {
-    @Query(value="select * from cart where book_id =:bookId",nativeQuery =true)
+public interface BookStoreCartRepository extends JpaRepository<Cart, Integer> {
+    @Query(value = "select * from cart where book_id =:bookId", nativeQuery = true)
     Optional<Cart> findByBookId(Integer bookId);
 }

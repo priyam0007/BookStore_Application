@@ -19,22 +19,17 @@ public class BookService implements IBookService {
 
     @Autowired
     BookStoreRepository bookStoreRepository;
+
     @Override
     public Book createBook(BookDTO bookDTO) {
         Book newBook = new Book(bookDTO);
-        return  bookStoreRepository.save(newBook);
+        return bookStoreRepository.save(newBook);
     }
 
-    /**
-     * create a method name as getBookDataById
-     * - Ability to get book data by id
-     * @param BookId - book id
-     * @return - book data by id
-     */
     @Override
     public Book getBookDataById(int BookId) {
-        Optional<Book> getBook=bookStoreRepository.findById(BookId);
-        if(getBook.isPresent()){
+        Optional<Book> getBook = bookStoreRepository.findById(BookId);
+        if (getBook.isPresent()) {
             return getBook.get();
 
         }
@@ -42,24 +37,12 @@ public class BookService implements IBookService {
 
     }
 
-    /**
-     * create a method name as getAllData
-     * - Ability to get all book' data by findAll() method
-     * @return - all data
-     */
     @Override
     public List<Book> getAllBookData() {
-        List<Book> getBooks=bookStoreRepository.findAll();
+        List<Book> getBooks = bookStoreRepository.findAll();
         return getBooks;
     }
 
-    /**
-     * create a method name as updateRecordById
-     * Ability to update book data for particular id
-     * @param BookId - book id
-     * @param bookDTO - book data
-     * @return - updated book information in JSON format
-     */
     @Override
     public Book updateRecordById(Integer BookId, BookDTO bookDTO) {
 
@@ -75,12 +58,6 @@ public class BookService implements IBookService {
         }
     }
 
-    /**
-     * create a method name as deleteRecordById
-     * ability to delete data by particular book id
-     * @param BookId - book id
-     * @return - bookId and Acknowledgment message
-     */
     @Override
     public String deleteRecordById(int BookId) {
         Optional<Book> newBook = bookStoreRepository.findById(BookId);
@@ -92,10 +69,11 @@ public class BookService implements IBookService {
         }
         return "data deleted successful";
     }
+
     @Override
     public List<Book> getBookByName(String bookName) {
-        List<Book> findBook= bookStoreRepository.findByBookName(bookName);
-        if(findBook.isEmpty()){
+        List<Book> findBook = bookStoreRepository.findByBookName(bookName);
+        if (findBook.isEmpty()) {
             throw new BookStoreException(" Details for provided Book is not found");
         }
         return findBook;
@@ -103,25 +81,24 @@ public class BookService implements IBookService {
 
     @Override
     public List<Book> sortedListOfBooksInAscendingOrder() {
-        List<Book> getSortedList=  bookStoreRepository.getSortedListOfBooksInAsc();
+        List<Book> getSortedList = bookStoreRepository.getSortedListOfBooksInAsc();
         return getSortedList;
     }
 
     @Override
     public List<Book> sortedListOfBooksInDescendingOrder() {
-        List<Book> getSortedListInDesc=  bookStoreRepository.getSortedListOfBooksInDesc();
+        List<Book> getSortedListInDesc = bookStoreRepository.getSortedListOfBooksInDesc();
         return getSortedListInDesc;
     }
 
     @Override
     public List<Book> getBookByAuthorName(String authorName) {
-        List<Book> findBook= bookStoreRepository.findByBookAuthorName(authorName);
-        if(findBook.isEmpty()){
+        List<Book> findBook = bookStoreRepository.findByBookAuthorName(authorName);
+        if (findBook.isEmpty()) {
             throw new BookStoreException(" Details for provided Book is not found");
         }
         return findBook;
     }
-
 
 
 }

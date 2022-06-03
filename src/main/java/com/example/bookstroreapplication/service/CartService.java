@@ -45,15 +45,14 @@ public class CartService implements ICartService {
 
     @Override
     public ResponseDTO getCartDetails() {
-        List<Cart> getCartDetails=bookStoreCartRepository.findAll();
-        ResponseDTO dto= new ResponseDTO();
-        if (getCartDetails.isEmpty()){
-            String   message=" Not found Any Cart details ";
+        List<Cart> getCartDetails = bookStoreCartRepository.findAll();
+        ResponseDTO dto = new ResponseDTO();
+        if (getCartDetails.isEmpty()) {
+            String message = " Not found Any Cart details ";
             dto.setMessage(message);
             dto.setData(0);
             return dto;
-        }
-        else {
+        } else {
             dto.setMessage("the list of cart items is sucussfully retrived");
             dto.setData(getCartDetails);
             return dto;
@@ -62,22 +61,21 @@ public class CartService implements ICartService {
 
     @Override
     public Cart getCartDetailsById(Integer cartId) {
-        Optional<Cart> getCartData=bookStoreCartRepository.findById(cartId);
-        if (getCartData.isPresent()){
+        Optional<Cart> getCartData = bookStoreCartRepository.findById(cartId);
+        if (getCartData.isPresent()) {
             return getCartData.get();
-        }
-        else {
+        } else {
             throw new BookStoreException(" Didn't find any record for this particular cartId");
         }
     }
+
     public Cart getCartRecordByBookId(Integer bookId) {
         Optional<Cart> cart = bookStoreCartRepository.findByBookId(bookId);
-        if(cart.isPresent()) {
-            log.info("Cart record retrieved successfully for book id "+bookId);
+        if (cart.isPresent()) {
+            log.info("Cart record retrieved successfully for book id " + bookId);
             return cart.get();
 
-        }
-        else {
+        } else {
             return null;
             //throw new BookStoreException("Cart Record doesn't exists");
         }
@@ -85,12 +83,11 @@ public class CartService implements ICartService {
 
     @Override
     public Cart deleteCartItemById(Integer cartId) {
-        Optional<Cart> deleteData=bookStoreCartRepository.findById(cartId);
-        if (deleteData.isPresent()){
+        Optional<Cart> deleteData = bookStoreCartRepository.findById(cartId);
+        if (deleteData.isPresent()) {
             bookStoreCartRepository.deleteById(cartId);
             return deleteData.get();
-        }
-        else {
+        } else {
             throw new BookStoreException(" Did not get any cart for specific cart id ");
         }
 
@@ -100,20 +97,18 @@ public class CartService implements ICartService {
     @Override
     public Cart updateRecordById(Integer cartId, CartDTO cartDTO) {
         Optional<Cart> cart = bookStoreCartRepository.findById(cartId);
-        Optional<Book>  book = bookStoreRepository.findById(cartDTO.getBookId());
+        Optional<Book> book = bookStoreRepository.findById(cartDTO.getBookId());
         Optional<UserRegistration> user = userRepository.findById(cartDTO.getUserId());
-        if(cart.isPresent()) {
-            if(book.isPresent() && user.isPresent()) {
-                Cart newCart = new Cart(cartId,cartDTO.getQuantity(),book.get(),user.get());
+        if (cart.isPresent()) {
+            if (book.isPresent() && user.isPresent()) {
+                Cart newCart = new Cart(cartId, cartDTO.getQuantity(), book.get(), user.get());
                 bookStoreCartRepository.save(newCart);
-                log.info("Cart record updated successfully for id "+cartId);
+                log.info("Cart record updated successfully for id " + cartId);
                 return newCart;
-            }
-            else {
+            } else {
                 throw new BookStoreException("Book or User doesn't exists");
             }
-        }
-        else {
+        } else {
             throw new BookStoreException("Cart Record doesn't exists");
         }
     }
