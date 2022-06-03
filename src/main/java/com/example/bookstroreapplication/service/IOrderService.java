@@ -16,7 +16,5 @@ public interface IOrderService {
     public Order updateOrderRecord(Integer id, OrderDTO dto);
 
     public com.example.bookstroreapplication.model.Order deleteOrderRecord(Integer id);
-
-    public com.example.bookstroreapplication.model.Order cancelOrder(Integer id);
 }
 
