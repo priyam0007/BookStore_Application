@@ -3,25 +3,19 @@ package com.example.bookstroreapplication.service;
 import com.example.bookstroreapplication.dto.BookDTO;
 import com.example.bookstroreapplication.model.Book;
 
-
 import java.util.List;
 
 public interface IBookService {
-    Book createBook(BookDTO bookDTO);
+    String createBook(BookDTO bookDTO);
+    List<Book> getAllBookData(String token);
+    Book getBookDataById(String token);
+    List<Book> getBookByName(String bookName);
+    List<Book> sortedListOfBooksInAscendingOrder();
+    List<Book> sortedListOfBooksInDescendingOrder();
+    String deleteRecordById(String token);
+    Book updateRecordById(String token,BookDTO bookDTO);
+    List<Book> getBookByAuthorName(String authorName);
 
-    List<Book> getAllBookData();
-
-    Book getBookDataById(int bookId);
-
-    String deleteRecordById(int BookId);
-
-    List<com.example.bookstroreapplication.model.Book> getBookByAuthorName(String authorName);
-
-    List<com.example.bookstroreapplication.model.Book> getBookByName(String name);
-
-    List<com.example.bookstroreapplication.model.Book> sortedListOfBooksInAscendingOrder();
-
-    List<com.example.bookstroreapplication.model.Book> sortedListOfBooksInDescendingOrder();
-
-    Book updateRecordById(Integer bookId, BookDTO bookDTO);
+    Book updataBooksByQuantity(String token, int quantity);
 }
+

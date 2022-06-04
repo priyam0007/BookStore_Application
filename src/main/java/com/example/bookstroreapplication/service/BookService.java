@@ -5,6 +5,7 @@ import com.example.bookstroreapplication.dto.BookDTO;
 import com.example.bookstroreapplication.exception.BookStoreException;
 import com.example.bookstroreapplication.model.Book;
 import com.example.bookstroreapplication.repository.BookStoreRepository;
+import com.example.bookstroreapplication.util.TokenUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,57 +20,79 @@ public class BookService implements IBookService {
 
     @Autowired
     BookStoreRepository bookStoreRepository;
+    @Autowired
+    TokenUtility util;
 
     @Override
-    public Book createBook(BookDTO bookDTO) {
-        Book newBook = new Book(bookDTO);
-        return bookStoreRepository.save(newBook);
+    public String createBook(BookDTO bookDTO) {
+        Book bookData = new Book(bookDTO);
+        bookStoreRepository.save(bookData);
+        String token = util.createToken(bookData.getBookId());
+        return token;
     }
 
     @Override
-    public Book getBookDataById(int BookId) {
-        Optional<Book> getBook = bookStoreRepository.findById(BookId);
-        if (getBook.isPresent()) {
-            return getBook.get();
-
-        }
-        throw new BookStoreException("Book Store Details for id not found");
-
-    }
-
-    @Override
-    public List<Book> getAllBookData() {
-        List<Book> getBooks = bookStoreRepository.findAll();
-        return getBooks;
-    }
-
-    @Override
-    public Book updateRecordById(Integer BookId, BookDTO bookDTO) {
-
-        Optional<Book> updateBook = bookStoreRepository.findById(BookId);
-        if (updateBook.isPresent()) {
-            Book updateUser = new Book(BookId, bookDTO);
-            bookStoreRepository.save(updateUser);
-            return updateUser;
-
+    public Book getBookDataById(String token) {
+        int id = util.decodeToken(token);
+        Optional<Book> book = bookStoreRepository.findById(id);
+        if (book.isPresent()) {
+            return book.get();
         } else {
+            throw new BookStoreException("Exception with id" + id + "does not exist!!");
+        }
+    }
 
+    @Override
+    public List<Book> getAllBookData(String token) {
+        int id = util.decodeToken(token);
+        Optional<Book> bookData = bookStoreRepository.findById(id);
+        if (bookData.isPresent()) {
+            List<Book> listOfBooks = bookStoreRepository.findAll();
+            return listOfBooks;
+        } else {
+            System.out.println("Exception ...Token not found!");
+            return null;
+        }
+    }
+
+    @Override
+    public Book updataBooksByQuantity(String token, int quantity) {
+        int id = util.decodeToken(token);
+        Optional<Book> book = bookStoreRepository.findById(id);
+        if (book.isPresent()) {
+            Book bookData1 = new Book();
+            bookData1.setQuantity(quantity);
+            bookStoreRepository.save(bookData1);
+            return bookData1;
+        } else {
+            throw new BookStoreException("Bookdata record does not found");
+        }
+    }
+
+    @Override
+    public Book updateRecordById(String token, BookDTO bookDTO) {
+        int id = util.decodeToken(token);
+        Optional<Book> bookData = bookStoreRepository.findById(id);
+        if (bookData.isPresent()) {
+            Book updateData = new Book(id, bookDTO);
+            bookStoreRepository.save(updateData);
+            return updateData;
+        } else {
+            throw new BookStoreException("Bookdata record does not found");
+        }
+    }
+
+    @Override
+    public String deleteRecordById(String token) {
+        int id = util.decodeToken(token);
+        Optional<Book> book = bookStoreRepository.findById(id);
+        if (book.isPresent()) {
+            bookStoreRepository.deleteById(id);
+        } else {
             throw new BookStoreException("Book record does not found");
         }
+        return token;
     }
-
-    @Override
-    public String deleteRecordById(int BookId) {
-        Optional<Book> newBook = bookStoreRepository.findById(BookId);
-        if (newBook.isPresent()) {
-            bookStoreRepository.deleteById(BookId);
-
-        } else {
-            throw new BookStoreException("Book record does not found");
-        }
-        return "data deleted successful";
-    }
-
     @Override
     public List<Book> getBookByName(String bookName) {
         List<Book> findBook = bookStoreRepository.findByBookName(bookName);
@@ -99,6 +122,4 @@ public class BookService implements IBookService {
         }
         return findBook;
     }
-
-
 }
