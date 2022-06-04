@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cart")
@@ -20,41 +21,35 @@ public class CartController {
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> insertItem(@Valid @RequestBody CartDTO cartdto) {
-        Cart newCart = cartService.insertItems(cartdto);
+        String newCart = cartService.insertItems(cartdto);
         ResponseDTO responseDTO = new ResponseDTO("User registered successfully !", newCart);
         return new ResponseEntity(responseDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping("/getAll")
-    public ResponseDTO getAllCartDetails() {
-        ResponseDTO responseDTO = cartService.getCartDetails();
-        return responseDTO;
+    @GetMapping("/getAll/{token}")
+    public ResponseEntity<ResponseDTO> getAllCartDetails(@PathVariable String token) {
+        List<Cart> cart=cartService.getCartDetails(token);
+        ResponseDTO responseDTO = new ResponseDTO("Get call Success",cart);
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/getById/{cartId}")
-    public ResponseEntity<ResponseDTO> getCartDetailsById(@PathVariable Integer cartId){
-        Cart specificCartDetail=cartService.getCartDetailsById(cartId);
+    @GetMapping("/getById/{token}")
+    public ResponseEntity<ResponseDTO> getCartDetailsById(@PathVariable String token){
+        Cart specificCartDetail=cartService.getCartDetailsById(token);
         ResponseDTO responseDTO=new ResponseDTO("Cart details retrieved successfully",specificCartDetail);
         return new ResponseEntity(responseDTO,HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/retrieveCartByBookId/{bookID}")
-    public ResponseEntity<ResponseDTO> getCartRecordByBookId(@PathVariable Integer bookID){
-        Cart newCart = cartService.getCartRecordByBookId(bookID);
-        ResponseDTO dto = new ResponseDTO("Record retrieved successfully !",newCart);
-        return new ResponseEntity(dto,HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete/{cartId}")
-    public ResponseEntity<ResponseDTO> deleteCartById(@PathVariable Integer cartId) {
-        Cart delete = cartService.deleteCartItemById(cartId);
-        ResponseDTO responseDTO = new ResponseDTO("Cart delete successfully", delete);
+    @DeleteMapping("/delete/{token}")
+    public ResponseEntity<ResponseDTO> deleteCartById(@PathVariable String token) {
+        cartService.deleteCartItemById(token);
+        ResponseDTO responseDTO = new ResponseDTO("Cart delete successfully",token);
         return new ResponseEntity(responseDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/updateById/{cartId}")
-    public ResponseEntity<ResponseDTO> updateCartById(@PathVariable Integer cartId,@Valid @RequestBody CartDTO cartDTO){
-        Cart updateRecord = cartService.updateRecordById(cartId,cartDTO);
+    @PutMapping("/updateById/{token}")
+    public ResponseEntity<ResponseDTO> updateCartById(@PathVariable String token,@Valid @RequestBody CartDTO cartDTO) {
+        Cart updateRecord = cartService.updateRecordById(token,cartDTO);
         ResponseDTO dto = new ResponseDTO(" Cart Record updated successfully by Id",updateRecord);
         return new ResponseEntity(dto,HttpStatus.ACCEPTED);
     }
