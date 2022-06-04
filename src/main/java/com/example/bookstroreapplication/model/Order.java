@@ -39,7 +39,7 @@ public class Order {
         super();
     }
 
-    public Order(Integer price, Integer quantity, String address, Book book, UserRegistration user, boolean cancel) {
+    public Order(Integer price, Integer quantity, String address,Book book, UserRegistration user, boolean cancel) {
         this.price=price;
         this.quantity=quantity;
         this.address=address;

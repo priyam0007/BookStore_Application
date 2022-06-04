@@ -28,8 +28,8 @@ public class BookController {
         return new ResponseEntity(responseDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/getAll")
-    public ResponseEntity<String> getAllBookData() {
+    @GetMapping(value = "/getAll/{token}")
+    public ResponseEntity<String> getAllBookData(@PathVariable String token) {
         List<Book> listOfBooks = bookService.getAllBookData();
         ResponseDTO dto = new ResponseDTO("Data retrieved successfully (:", listOfBooks);
         return new ResponseEntity(dto, HttpStatus.OK);

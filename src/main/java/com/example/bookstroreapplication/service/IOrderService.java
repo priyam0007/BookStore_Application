@@ -7,14 +7,11 @@ import java.util.List;
 
 public interface IOrderService {
 
-    public com.example.bookstroreapplication.model.Order insertOrder(OrderDTO orderdto);
+    String insertOrder(OrderDTO orderdto);
+   List <Order> getOrderRecord(String token);
+  List<Order> getAllOrderRecords(String token);
 
-    public List<com.example.bookstroreapplication.model.Order> getAllOrderRecords();
 
-    public com.example.bookstroreapplication.model.Order getOrderRecord(Integer id);
-
-    public Order updateOrderRecord(Integer id, OrderDTO dto);
-
-    public com.example.bookstroreapplication.model.Order deleteOrderRecord(Integer id);
+    Order cancelOrder(String token,int userId);
 }
 
