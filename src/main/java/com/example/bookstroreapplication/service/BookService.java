@@ -16,8 +16,13 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+/**
+ * Created BookService class to serve api calls done by controller layer
+ */
 public class BookService implements IBookService {
-
+    /**
+     * Autowired BookStoreRepository interface to inject its dependency here
+     */
     @Autowired
     BookStoreRepository bookStoreRepository;
     @Autowired
@@ -43,30 +48,9 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public List<Book> getAllBookData(String token) {
-        int id = util.decodeToken(token);
-        Optional<Book> bookData = bookStoreRepository.findById(id);
-        if (bookData.isPresent()) {
+    public List<Book> getAllBookData() {
             List<Book> listOfBooks = bookStoreRepository.findAll();
             return listOfBooks;
-        } else {
-            System.out.println("Exception ...Token not found!");
-            return null;
-        }
-    }
-
-    @Override
-    public Book updataBooksByQuantity(String token, int quantity) {
-        int id = util.decodeToken(token);
-        Optional<Book> book = bookStoreRepository.findById(id);
-        if (book.isPresent()) {
-            Book bookData1 = new Book();
-            bookData1.setQuantity(quantity);
-            bookStoreRepository.save(bookData1);
-            return bookData1;
-        } else {
-            throw new BookStoreException("Bookdata record does not found");
-        }
     }
 
     @Override

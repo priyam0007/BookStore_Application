@@ -20,6 +20,5 @@ public class EmailSenderService {
         System.out.println("Mail sent to the User...!");
 
     }
-
 }
 

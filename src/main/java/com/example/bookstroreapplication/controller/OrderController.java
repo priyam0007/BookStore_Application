@@ -12,11 +12,22 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-
+/**
+ *  1) @RestController :-
+ *           @RestController is used for making restful web services with the help of the @RestController annotation.
+ *           This annotation is used at the class level and allows the class to handle the requests made by the client
+ * 2) @RequestMapping :-
+ *           @RequestMapping used to map web requests onto specific handler classes and/or handler methods.
+ *           RequestMapping can be applied to the controller class as well as methods
+ *
+ * - Created controller so that we can perform rest api calls
+ */
 @RestController
 @RequestMapping("/order")
+/**
+ * create a class name as OrderController
+ */
 public class OrderController {
-
     @Autowired
     private IOrderService orderService;
 

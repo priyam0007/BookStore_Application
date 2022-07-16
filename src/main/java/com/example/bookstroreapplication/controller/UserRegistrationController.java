@@ -23,7 +23,6 @@ import java.util.List;
  *
  * - Created controller so that we can perform rest api calls
  */
-
 @RestController
 @RequestMapping("/user")
 /**
@@ -93,16 +92,12 @@ public class UserRegistrationController {
                 userRegistrationService.getUserByEmailId(emailId)), HttpStatus.OK);
     }
     /**
-     * get user by token
-     * Ability to get a record by token
+     * update  record data by id
+     * @apiNote accepts the user data in JSON format and updates the user data having same Id from database
+     * @param id - represents user id
+     * @param userDTO - represents object of UserDto class
+     * @return	updated user information in JSON format
      */
-    //Get user by user id
-    @PostMapping("/forgotPassword")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email, @RequestParam String password) {
-        String resp = userRegistrationService.forgotPassword(email, password);
-        return new ResponseEntity(resp, HttpStatus.OK);
-    }
-
     @PutMapping("/update/{id}")
     public ResponseEntity<String> updateRecordById(@PathVariable Integer id, @Valid @RequestBody UserDTO userDTO) {
         UserRegistration entity = userRegistrationService.updateRecordById(id, userDTO);

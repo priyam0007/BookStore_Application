@@ -17,24 +17,27 @@ public class Cart {
     @JoinColumn(name = "bookId")
     private Book book;
     private Integer quantity;
+    private int total;
 
-    public Cart(Integer cartId, Integer quantity, Book book, UserRegistration user) {
-        super();
+    public Cart(Integer cartId, Integer quantity, Book book, UserRegistration user, int total) {
+      //  super();
         this.cartId = cartId;
         this.quantity = quantity;
+        this.total = total;
         this.book = book;
         this.user = user;
+
     }
 
     public Cart(Integer quantity, Book book, UserRegistration user) {
-        super();
+      //  super();
         this.quantity = quantity;
         this.book = book;
         this.user = user;
     }
 
     public Cart() {
-        super();
+      //  super();
     }
 }
 

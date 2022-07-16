@@ -107,8 +107,7 @@ public class OrderService implements IOrderService {
             order.get().setCancel(true);
             orderRepo.save(order.get());
             mailService.sendEmail(order.get().getUser().getEmail(), "Test Email", "canceled order SuccessFully, hii: "
-                    +order.get().getOrderID()+"Please Click here to get data of updated id-> "
-                    +"http://localhost:8098/order/cancelOrder/"+token);
+                    +order.get().getOrderID());
             return order.get();
         } else {
             throw new BookStoreException("Order Record doesn't exists");

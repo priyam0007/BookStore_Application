@@ -10,14 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.util.List;
 
-
+@CrossOrigin(allowedHeaders = "*", origins = "*")
 @RestController
 @RequestMapping("/book")
 public class BookController {
-
     @Autowired
     IBookService bookService;
 
@@ -28,9 +26,9 @@ public class BookController {
         return new ResponseEntity(responseDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/getAll/{token}")
-    public ResponseEntity<String> getAllBookData(@PathVariable String token) {
-        List<Book> listOfBooks = bookService.getAllBookData(token);
+    @GetMapping(value = "/getAll")
+    public ResponseEntity<String> getAllBookData() {
+        List<Book> listOfBooks = bookService.getAllBookData();
         ResponseDTO dto = new ResponseDTO("Data retrieved successfully (:", listOfBooks);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
@@ -50,15 +48,9 @@ public class BookController {
 
     @PutMapping("/updateBookById/{token}")
     public ResponseEntity<String> updateRecordById(@PathVariable String token, @Valid @RequestBody BookDTO bookDTO) {
-        Book updateRecord = bookService.updateRecordById(token,bookDTO);
+        Book updateRecord = bookService.updateRecordById(token, bookDTO);
         ResponseDTO dto = new ResponseDTO(" Book Record updated successfully by Id", updateRecord);
         return new ResponseEntity(dto, HttpStatus.ACCEPTED);
-    }
-    @PutMapping("/update/{token}/{quantity}")
-    public ResponseEntity<ResponseDTO> updateBooksByQuantity(@PathVariable String token,@PathVariable int quantity){
-        Book bookData=bookService.updataBooksByQuantity(token,quantity);
-        ResponseDTO responseDTO=new ResponseDTO("updated book data succesfully",bookData);
-        return  new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
 
 
