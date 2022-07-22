@@ -1,5 +1,6 @@
 package com.example.bookstroreapplication.model;
 
+import com.example.bookstroreapplication.dto.OrderDTO;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -46,6 +47,10 @@ public class Order {
         this.book = book;
         this.user=user;
         this.cancel = cancel;
+    }
+
+    public Order(OrderDTO orderdto, Book book, UserRegistration userRegistration) {
+
     }
 }
 

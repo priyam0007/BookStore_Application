@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface IOrderService {
 
-    String insertOrder(OrderDTO orderdto);
+    Order insertOrder(OrderDTO orderdto);
 
-    List<Order> getOrderRecord(String token);
+    List<Order> getOrderRecord(int id);
 
-    List<Order> getAllOrderRecords(String token);
+    List<Order> getAllOrderRecords(int id);
 
-    Order cancelOrder(String token, int userId);
+    Order cancelOrder(int id, int userId);
 }
 
