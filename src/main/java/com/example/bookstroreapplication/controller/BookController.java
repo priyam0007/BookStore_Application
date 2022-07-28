@@ -67,6 +67,13 @@ public class BookController {
         ResponseDTO dto = new ResponseDTO("Data retrieved successfully (:", listOfBooks);
         return new ResponseEntity(dto, HttpStatus.OK);
     }
+    @GetMapping(value = "/getcount")
+    public ResponseEntity<ResponseDTO> getAddressBookDataCount() {
+        List<Book> listOfBooks = bookService.getAllBookData();
+        Integer count = listOfBooks.size();
+        ResponseDTO dto = new ResponseDTO("Book count successfully (:", count);
+        return new ResponseEntity(dto, HttpStatus.OK);
+    }
 
     @GetMapping("/sortDesc")
     public ResponseEntity<ResponseDTO> getBooksInDescendingOrder() {

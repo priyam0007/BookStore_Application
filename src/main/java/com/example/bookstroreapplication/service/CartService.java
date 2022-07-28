@@ -114,5 +114,24 @@ public class CartService implements ICartService {
         }
         return cart.get();
     }
+
+    @Override
+    public Cart updateCartByid(int cartid, CartDTO cartDTO) {
+        Optional<Cart> cart = bookStoreCartRepository.findById(cartid);
+        Optional<Book> book = bookStoreRepository.findById(cartDTO.getBookId());
+        Optional<UserRegistration> user = userRepository.findById(cartDTO.getUserId());
+        if (cart.isPresent()) {
+            throw new BookStoreException("Cart Record doesn't exists");
+        } else {
+            if (book.isPresent() && user.isPresent()) {
+                Cart newCart = new Cart(cartDTO.quantity,book.get(), user.get());
+                bookStoreCartRepository.save(newCart);
+                return newCart;
+            } else {
+                throw new BookStoreException("Book or User doesn't exists");
+            }
+        }
+    }
 }
+
 

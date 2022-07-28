@@ -3,7 +3,6 @@ package com.example.bookstroreapplication.controller;
 
 import com.example.bookstroreapplication.dto.OrderDTO;
 import com.example.bookstroreapplication.dto.ResponseDTO;
-import com.example.bookstroreapplication.model.Book;
 import com.example.bookstroreapplication.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.bookstroreapplication.model.Order;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *  1) @RestController :-
